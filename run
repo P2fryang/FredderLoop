@@ -1,2 +1,9 @@
-screen -X -S FredLoop quit
-screen -dmS FredLoop python3 testBot.py 
+# screen -X -S FredLoop quit
+# screen -dmS FredLoop python3 testBot.py 
+
+pid=$(pgrep python3)
+if [ -n $pid ]; then
+    kill $pid
+fi
+
+nohup python3 testBot.py &
