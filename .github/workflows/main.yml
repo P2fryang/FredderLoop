@@ -19,4 +19,7 @@ jobs:
           git pull origin main
           
           RUNNER_TRACKING_ID=""  # prevents cleanup of child processses
-          /root/FredderLoop/run
+          
+          nohup python3 testBot.py
+
+          # /root/FredderLoop/run
