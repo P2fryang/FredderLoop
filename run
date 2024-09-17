@@ -1,0 +1,2 @@
+screen -X -S FredLoop quit
+screen -dmS FredLoop python3 testBot.py 
