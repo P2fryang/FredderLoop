@@ -20,5 +20,5 @@ jobs:
           cd /root/FredderLoop
           
           RUNNER_TRACKING_ID=""  # prevents cleanup of child processses
-          nohup python3 testBot.py &
+          ./run
           

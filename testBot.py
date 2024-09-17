@@ -17,7 +17,7 @@ async def on_ready():
 # Define a command that responds with "Hello, World!"
 @bot.tree.command(name='hello', description="Replies")
 async def hello(interaction: discord.Interaction):
-    await interaction.response.send_message(f"Fuck you ld! {interaction.user.mention}")
+    await interaction.response.send_message(f"Hi! {interaction.user.mention}")
 
 bot.run(BOT_TOKEN)
 
