@@ -8,13 +8,15 @@ on:
 jobs:
   deploy:
     runs-on: self-hosted
-
     steps:
-      - name: Checkout code
+      - name: Update code
         uses: actions/checkout@v3
-
-      - name: Update and run application
+  
+      - name: Run application
         run: |
+          # cd /root/actions-runner/_work/FredderLoop/FredderLoop
           cd /root/FredderLoop
           git pull origin main
-          python3 testBot.py
+          RUNNER_TRACKING_ID=""  # prevents cleanup of child processses
+          ./run
+          
