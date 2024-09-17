@@ -10,19 +10,10 @@ jobs:
     runs-on: self-hosted
 
     steps:
-    
-      - name: Delete previous run
-        run: |
-          pid=$(pgrep -f testBot.py)
-          if [ -n "$pid" ]; then
-            kill $pid
-          fi
 
       - name: Update code
         uses: actions/checkout@v3
   
       - name: Run application
         run: |
-          cd /root/FredderLoop
-          ./run
-          
+          /root/FredderLoop
