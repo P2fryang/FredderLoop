@@ -10,13 +10,16 @@ jobs:
     runs-on: self-hosted
 
     steps:
+    
       - name: Delete previous run
         run: |
-          pgrep python3 && kill $(pgrep python3)
+          pid=$(pgrep -f testBot.py)
+          if [ -n "$pid" ]; then
+            kill $pid
+          fi
 
       - name: Update code
         uses: actions/checkout@v3
-
   
       - name: Run application
         run: |
