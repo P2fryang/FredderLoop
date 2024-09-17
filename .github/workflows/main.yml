@@ -15,6 +15,7 @@ jobs:
       - name: Run application
         run: |
           cd /root/actions-runner/_work/FredderLoop/FredderLoop
+          git pull origin main
           RUNNER_TRACKING_ID=""  # prevents cleanup of child processses
           ./run
           
