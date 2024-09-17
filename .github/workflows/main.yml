@@ -10,13 +10,16 @@ jobs:
     runs-on: self-hosted
 
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
-
-      - name: Update and run application
+      - name: Delete previous run
         run: |
           kill $(pgrep python3)
+
+      - name: Update code
+        uses: actions/checkout@v3
+
+  
+      - name: Run application
+        run: |
           cd /root/FredderLoop
-          git pull origin main
           nohup python3 testBot.py &
           
