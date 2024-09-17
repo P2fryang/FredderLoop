@@ -12,7 +12,7 @@ jobs:
     steps:
       - name: Delete previous run
         run: |
-          kill $(pgrep python3)
+          pgrep python3 && kill $(pgrep python3)
 
       - name: Update code
         uses: actions/checkout@v3
