@@ -15,6 +15,8 @@ jobs:
 
       - name: Update and run application
         run: |
+          kill $(pgrep python3)
           cd /root/FredderLoop
           git pull origin main
-          python3 testBot.py
+          nohup python3 testBot.py &
+          
