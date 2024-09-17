@@ -16,4 +16,6 @@ jobs:
   
       - name: Run application
         run: |
+          
+          RUNNER_TRACKING_ID=""  # prevents cleanup of child processses
           /root/FredderLoop/run
