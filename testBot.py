@@ -19,5 +19,9 @@ async def on_ready():
 async def hello(interaction: discord.Interaction):
     await interaction.response.send_message(f"Hi! {interaction.user.mention}")
 
+@bot.tree.command(name='start', description="starts a letter loop")
+async def start(interaction):
+    await interaction.response.send_message("starting letter loop")
+
 bot.run(BOT_TOKEN)
 
