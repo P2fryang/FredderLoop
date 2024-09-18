@@ -2,9 +2,8 @@ from googleCred import credentials
 from apiclient import discovery
 from httplib2 import Http
 from oauth2client import client, file, tools
-
 from datetime import datetime
-
+from config import GOOGLE_DRIVE_FOLDER_ID, DISCORD_LETTERLOOP_CHANNELID, BOT_TOKEN
 
 form_service = discovery.build("forms", "v1", credentials=credentials)
 drive_service = discovery.build('drive', 'v3', credentials=credentials)
@@ -94,6 +93,27 @@ def createForm(folder_id):
     return form
 
 
-
-form = createForm("1lPkEZ8CHA5IeQJ10wg2ZbCo6IlRkgqiD")
+form = createForm(GOOGLE_DRIVE_FOLDER_ID)
 print(form)
+respondURL = form['responderUri']
+message = f"New FredderLoop issue just dropped! 3 weeks to add questions here: https://docs.google.com/forms/d/{form['formId']}/edit"
+
+
+import discord
+
+client = discord.Client(intents=discord.Intents.default())
+
+@client.event
+async def on_ready():
+    print(f"Logged in as {client.user.name}")
+    channel = client.get_channel(DISCORD_LETTERLOOP_CHANNELID)
+
+    if channel:
+        await channel.send(message)
+    else:
+        print("error, no channel")
+
+    await client.close()
+
+
+client.run(BOT_TOKEN)

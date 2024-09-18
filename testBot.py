@@ -24,4 +24,3 @@ async def start(interaction):
     await interaction.response.send_message("starting letter loop")
 
 bot.run(BOT_TOKEN)
-
