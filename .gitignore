@@ -3,3 +3,4 @@ __pycache__/*
 *.un~
 nohup.out
 fredderlooop*.json
+logs/*

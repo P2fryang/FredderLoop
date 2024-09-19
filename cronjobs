@@ -6,6 +6,6 @@
 # | └──────── Hour (0 - 23)
 # └────────── Minute (0 - 59)
 
-21 2 * * * python3 /root/FredderLoop/createForm.py
-22 2 * * * python3 /root/FredderLoop/collectResponses.py
-23 2 * * * python3 /root/FredderLoop/shareResponses.py
+27 2 * * * /usr/bin/python3 /root/FredderLoop/createForm.py >> /root/FredderLoop/logs/createForm.logs 2>&1
+28 2 * * * /usr/bin/python3 /root/FredderLoop/collectResponses.py >> /root/FredderLoop/logs/collectResponses.logs 2>&1
+29 2 * * * /usr/bin/python3 /root/FredderLoop/shareResponses.py >> /root/FredderLoop/logs/shareResponses.logs 2>&1
