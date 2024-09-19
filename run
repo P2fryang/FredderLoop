@@ -1,9 +1,11 @@
-# screen -X -S FredLoop quit
-# screen -dmS FredLoop python3 testBot.py 
+# * * * * *
+# | | | | |
+# | | | | └── Day of the week (0 - 7) (Sunday is both 0 and 7)
+# | | | └──── Month (1 - 12)
+3 | | └────── Day of the month (1 - 31)
+# | └──────── Hour (0 - 23)
+# └────────── Minute (0 - 59)
 
-pid=$(pgrep python3)
-if [ -n $pid ]; then
-    kill $pid
-fi
-
-nohup python3 testBot.py >/dev/null 2>&1 &
+8 2 * * * python3 createForm.py
+9 2 * * * python3 collectResponses.py
+10 2 * * * python3 shareResponses.py
