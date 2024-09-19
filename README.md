@@ -1,7 +1,7 @@
 Building:
 
-Every push to the main branch will trigger a Github Action that rebuilds the discord bot on that server
-
+Every push to main will update the crontab code on the Ubuntu server
+the cronjobs to run are in the file cronjobs
 
 Architecture Proposal:
 
