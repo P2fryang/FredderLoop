@@ -14,6 +14,4 @@ jobs:
 
       - name: Run application
         run: |
-          cd /root/FredderLoop
-          RUNNER_TRACKING_ID=""  # prevents cleanup of child processses
-          ./run
+          crontab /root/FredderLoop/cronjobs
