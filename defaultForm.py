@@ -5,16 +5,24 @@ def getDefaultFormHead():
     return {
         "info": {
             "title": date + " LetterLoop Questions",
-            "documentTitle": date,
-            "description": "Please double check that 'Collect Email Addresses' is Verified, " +
-                "'Allow Response Editing' and 'Limit to 1 Response' is turned on in " +
-                "Settings -> Responses before submitting your response ;)\n"
+            "documentTitle": date
         }
     }
 
 
 defaultFormBody = {
     "requests": [
+        {
+            "updateFormInfo": {
+                "info": {
+                    "description": "Google Forms API is extremely limited so " +
+                        "please double check that 'Collect Email Addresses' is Verified, " +
+                        "'Allow Response Editing' and 'Limit to 1 Response' is turned on in " +
+                        "Settings -> Responses ;)"
+                },
+                "updateMask": "description"
+            }
+        },
         {
             "createItem": {
                 "item": {
