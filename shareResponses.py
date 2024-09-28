@@ -14,7 +14,12 @@ if __name__ == "__main__":
 
     # add permission to view the files only to the people who responded
     responses = form_service.forms().responses().list(formId=formId).execute()
+
     for response in responses['responses']:
+        if 'respondentEmail' not in response:
+            print("Ah! The form didn't collect email addresses :(")
+            continue
+
         email = response['respondentEmail']
         drive_service.permissions().create(
             fileId=formId,
@@ -24,5 +29,7 @@ if __name__ == "__main__":
                 "role": "writer"
             }
         ).execute()
+
+        print("added writer role for", email)
 
     shareResponsesMessage()

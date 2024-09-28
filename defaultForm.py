@@ -5,7 +5,10 @@ def getDefaultFormHead():
     return {
         "info": {
             "title": date + " LetterLoop Questions",
-            "documentTitle": date
+            "documentTitle": date,
+            "description": "Please double check that 'Collect Email Addresses' is Verified, " +
+                "'Allow Response Editing' and 'Limit to 1 Response' is turned on in " +
+                "Settings -> Responses before submitting your response ;)\n"
         }
     }
 
@@ -15,8 +18,8 @@ defaultFormBody = {
         {
             "createItem": {
                 "item": {
-                    "title": "What is your name",
-                    "description": "Please give me your name",
+                    "title": "What is your name?",
+                    "description": "",
                     "questionItem": {
                         "question": {
                             "required": True,
