@@ -45,6 +45,7 @@ if __name__ == "__main__":
         fields='id, parents'
     ).execute()
 
+    # save formId in database
     print("form created: ", form)
     saveFormId(form['formId'])
 

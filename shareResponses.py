@@ -6,7 +6,10 @@ from discordBot import shareResponsesMessage
 
 if __name__ == "__main__":
     drive_service = discovery.build('drive', 'v3', credentials=credentials)
+
     formId = getFormId()
+    if formId === "":
+        exit()
 
     # remove all permissions (other than owning the file itself)
     result = drive_service.permissions().list(
