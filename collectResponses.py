@@ -8,7 +8,7 @@ if __name__ == "__main__":
     drive_service = discovery.build('drive', 'v3', credentials=credentials)
 
     formId = getFormId()
-    if formId === "":
+    if formId == "":
         exit()
 
     # remove all permissions (other than owning the file itself)
@@ -25,7 +25,7 @@ if __name__ == "__main__":
 
             print('removing', permission)
 
-    # add permission to view the files
+    # add permission to view the files to anyone for submission
     drive_service.permissions().create(
         fileId=formId,
         body={
