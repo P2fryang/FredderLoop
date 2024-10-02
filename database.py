@@ -1,8 +1,18 @@
+import os
+
+databaseDir = "./database"
+formIdDir = databaseDir + "/formId"
+
+def initDatabase():
+    if not os.path.isdir("./database"):
+        os.mkdir(databaseDir)
 
 def saveFormId(formId):
-    with open("database/formId", "w") as f:
+    initDatabase()
+    with open(formIdDir, "w") as f:
         f.write(formId)
 
 def getFormId():
-    with open("database/formId", "r") as f:
+    initDatabase()
+    with open(formIdDir, "r") as f:
         return f.read()

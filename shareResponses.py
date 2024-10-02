@@ -2,7 +2,7 @@ from googleCred import credentials
 from apiclient import discovery
 
 from database import getFormId
-from discordBot import shareResponsesMessage
+from discordBot import shareResponsesMessage, sendDiscordMessage
 
 if __name__ == "__main__":
     form_service = discovery.build("forms", "v1", credentials=credentials)
@@ -12,24 +12,40 @@ if __name__ == "__main__":
     if formId == "":
         exit()
 
-    # add permission to view the files only to the people who responded
     responses = form_service.forms().responses().list(formId=formId).execute()
+    responses = responses['responses']
+    print("responses", responses)
 
-    for response in responses['responses']:
-        if 'respondentEmail' not in response:
-            print("Ah! The form didn't collect email addresses :(")
-            continue
+    # if nobody submitted a response, do nothing
+    if len(responses) == 0:
+        sendDiscordMessage("Nobody submitted a response this month :(")
+        exit()
 
-        email = response['respondentEmail']
-        drive_service.permissions().create(
+    # if didn't collect email addresses, share to everyone
+    if 'respondentEmail' not in responses[0]:
+        drive_service.permissions().update(
             fileId=formId,
+            permissionId="anyoneWithLink",
             body={
-                "type": "user",
-                "emailAddress": email,
                 "role": "writer"
             }
         ).execute()
 
-        print("added writer role for", email)
+        print("added writer role for everyone")
+
+    # if did collect email addresses, only share to people who submitted
+    else:
+        for response in responses['responses']:
+            email = response['respondentEmail']
+            drive_service.permissions().create(
+                fileId=formId,
+                body={
+                    "type": "user",
+                    "emailAddress": email,
+                    "role": "writer"
+                }
+            ).execute()
+
+            print("added writer role for", email)
 
     shareResponsesMessage()
