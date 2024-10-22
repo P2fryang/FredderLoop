@@ -13,13 +13,20 @@ if __name__ == "__main__":
         exit()
 
     responses = form_service.forms().responses().list(formId=formId).execute()
-    responses = responses['responses']
-    print("responses", responses)
+
+    #drive_service.permissions().update(fileId=formId,permissionId="anyoneWithLink",body={'role':'writer'}).execute()
+
+
+    #responses = responses['responses']
+    #print("responses", responses)
 
     # if nobody submitted a response, do nothing
-    if len(responses) == 0:
+    if 'responses' not in responses or len(responses['responses']) == 0:
         sendDiscordMessage("Nobody submitted a response this month :(")
         exit()
+
+    responses = responses['responses']
+    print('responses', responses)
 
     # if didn't collect email addresses, share to everyone
     if 'respondentEmail' not in responses[0]:
@@ -47,5 +54,7 @@ if __name__ == "__main__":
             ).execute()
 
             print("added writer role for", email)
+
+
 
     shareResponsesMessage()
