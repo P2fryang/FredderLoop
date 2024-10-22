@@ -15,4 +15,4 @@ def saveFormId(formId):
 def getFormId():
     initDatabase()
     with open(formIdDir, "r") as f:
-        return f.read()
+        return f.read().strip()
