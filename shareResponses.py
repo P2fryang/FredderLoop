@@ -42,8 +42,9 @@ if __name__ == "__main__":
 
     # if did collect email addresses, only share to people who submitted
     else:
-        for response in responses['responses']:
+        for response in responses:
             email = response['respondentEmail']
+            print("adding", email)
             drive_service.permissions().create(
                 fileId=formId,
                 body={
