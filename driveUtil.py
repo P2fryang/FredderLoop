@@ -1,4 +1,4 @@
-# docs documentation: https://googleapis.github.io/google-api-python-client/docs/dyn/drive_v3.html
+# drive documentation: https://googleapis.github.io/google-api-python-client/docs/dyn/drive_v3.html
 
 # constants
 WRITER_PERMISSION = "writer"
@@ -34,6 +34,13 @@ def get_permissions(drive_service, file_id: str) -> dict:
     return permissions
 
 
+def delete_permission(drive_service, file_id: str, permission_id: str) -> None:
+    print(f"deleting permission {permission_id} for file {file_id}")
+    drive_service.permissions().delete(
+        fileId=file_id, permissionId=permission_id
+    ).execute()
+
+
 def trash_document(drive_service, file_id: str) -> None:
     print(f"Trashing document: {file_id}")
     body = {"trashed": True}
@@ -54,3 +61,46 @@ def add_anyone_write(drive_service, file_id: str) -> None:
         "allowFileDiscovery": False,
     }
     drive_service.permissions().create(fileId=file_id, body=body).execute()
+
+
+def add_anyone_reader(drive_service, file_id: str) -> None:
+    print(f"Adding anyone can ready: {file_id}")
+    body = {"type": "anyone", "role": "reader"}
+    drive_service.permissions.create(fildId=file_id, body=body).execute()
+
+
+def clear_nonowner_permissions(drive_service, file_id: str) -> None:
+    print(f"Clear all permissions besides owner for {file_id}")
+    result = get_permissions(drive_service=drive_service, file_id=file_id)
+    for permission in result["permissions"]:
+        if permission["role"] != "owner":
+            delete_permission(
+                drive_service=drive_service,
+                file_id=file_id,
+                permission_id=permission["id"],
+            )
+
+
+def list_files(drive_service, query: str = None) -> dict:
+    return drive_service.files().list(q=query).execute()
+
+def list_files_in_folder(drive_service, folder_id: str) -> dict:
+    query = f"parents in '{folder_id}'"
+    return drive_service.files().list(q=query).execute()
+
+
+def list_folders(drive_service) -> dict:
+    query = "mimeType='application/vnd.google-apps.folder'"
+    return drive_service.files().list(q=query).execute()
+
+
+def list_drives(drive_service) -> dict:
+    return drive_service.drives().list().execute()
+
+
+def list_file_labels(drive_service, file_id: str) -> dict:
+    return drive_service.files().listLabels(fileId=file_id).execute()
+
+
+def get_file(drive_service, file_id: str) -> dict:
+    return drive_service.files().get(fileId=file_id, fields="*").execute()
