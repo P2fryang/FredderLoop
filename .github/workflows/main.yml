@@ -15,5 +15,6 @@ jobs:
       - name: Run application
         run: |
           cd /home/pi/FredderLoop 
+          git checkout main
           git pull origin main
           crontab /home/pi/FredderLoop/cronjobs
