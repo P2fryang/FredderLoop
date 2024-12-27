@@ -42,9 +42,10 @@ def submissionReminderMessage():
     sendDiscordMessage(message)
 
 
-def lastHourReminderMessage():
+def lastHourReminderMessage(names):
     formId = getFormId()
     message = f"Only ONE MORE HOUR to submit your answers (there is NO auto-submit)! https://docs.google.com/forms/d/{formId}/viewform"
+    message += f"\n\nCurrent responses: {', '.join(names)}"
     sendDiscordMessage(message)
 
 
