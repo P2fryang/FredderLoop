@@ -25,16 +25,32 @@ if __name__ == "__main__":
     responses = responses["responses"]
     print("responses", responses)
 
-    doc_id, emails = createNewsletter(form=form, responses=responses)
-    # Move from root to Newsletter folder
-    driveUtil.move_file_to_folder(
-        drive_service=drive_service, file_id=doc_id, folder_id=NEWSLETTER_FOLDER_ID
-    )
-    driveUtil.share_document(
-        drive_service=drive_service,
-        file_id=doc_id,
-        emails=emails,
-        permission=driveUtil.COMMENT_PERMISSION,
-    )
+    for i in range(len(responses)):
+        if "respondentEmail" not in responses[i]:
+            responses[i]["respondentEmail"] = "katiehsieh25@gmail.com"
 
-    shareResponsesMessage(doc_id)
+    try:
+        doc_id, emails = createNewsletter(form=form, responses=responses)
+        # Move from root to Newsletter folder
+        driveUtil.move_file_to_folder(
+            drive_service=drive_service, file_id=doc_id, folder_id=NEWSLETTER_FOLDER_ID
+        )
+        driveUtil.share_document(
+            drive_service=drive_service,
+            file_id=doc_id,
+            emails=emails,
+            permission=driveUtil.COMMENT_PERMISSION,
+        )
+        shareResponsesMessage(doc_id)
+    except:
+        print("create newsletter failed")
+
+        for response in responses:
+            if "respondentEmail" in response:
+                drive_service.permissions().create(
+                    fileId=formId, body={"type": "user", "emailAddress": response["respondentEmail"], "role": "writer"}
+                ).execute()
+
+                print("sharing with", response["respondentEmail"])
+        shareResponsesMessage(formId)
+
