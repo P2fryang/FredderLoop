@@ -9,6 +9,7 @@ def log(*args):
     """Base print wrapper to mask potential emails and Google Drive folder/file id"""
     if "ALLOW_SENSITIVE_OUTPUT" in os.environ:
         # backdoor to allow default printing
+        # But use default print to avoid leaking to Github Actions
         print(" ".join(map(str, args)))
     new_args = []
     for arg in args:
@@ -37,4 +38,8 @@ def log(*args):
                     final_tmp_arg.append("***")
                 else:
                     final_tmp_arg.append(a)
-    print(" ".join(map(str, new_args)))
+    if os.environ.get("GITHUB_OUTPUT"):
+        with open(os.environ["GITHUB_OUTPUT"], "a", encoding="utf-8") as fh:
+            print(" ".join(map(str, new_args)), file=fh)
+    else:
+        print(" ".join(map(str, new_args)))
