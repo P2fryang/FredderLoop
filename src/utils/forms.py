@@ -33,7 +33,7 @@ def get_questions(form: dict) -> dict:
     """Parse form to get question titles"""
     questions = {}
     for question in form["items"]:
-        questions[question["questionItem"]["question"]["question_id"]] = question[
+        questions[question["questionItem"]["question"]["questionId"]] = question[
             "title"
         ]
     return questions
