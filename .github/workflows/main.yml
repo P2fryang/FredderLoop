@@ -86,40 +86,40 @@ jobs:
         run: |
           . .venv/bin/activate
           echo "Starting this month's Fredderloop by creating a form!"
-          python create_form.py > $"output_logs.txt"
-          cat $"output_logs.txt"
+          python create_form.py > "output_logs.txt"
+          cat "output_logs.txt"
       - name: Reminder to Add Questions
         if: github.event.schedule == '59 7 20 11,1-2 *' || github.event.schedule == '59 6 20 3-10 *' || inputs.eventType == 'remind_questions'
         run: |
           . .venv/bin/activate
           echo "Last day reminder to add questions!"
-          python add_questions_reminder.py > $"output_logs.txt"
-          cat $"output_logs.txt"
+          python add_questions_reminder.py > "output_logs.txt"
+          cat "output_logs.txt"
       - name: Collecting Responses
         if: github.event.schedule == '59 7 21 11,1-2 *' || github.event.schedule == '59 6 21 3-10 *' || inputs.eventType == 'collect_answers'
         run: |
           . .venv/bin/activate
           echo "Starting to collect responses!"
-          python collect_responses.py > $"output_logs.txt"
-          cat $"output_logs.txt"
+          python collect_responses.py > "output_logs.txt"
+          cat "output_logs.txt"
       - name: Reminder to Submit Answers
         if: github.event.schedule == '59 7 27 11,1-2 *' || github.event.schedule == '59 6 27 3-10 *' || inputs.eventType == 'remind_answers_day'
         run: |
           . .venv/bin/activate
           echo "Last day reminder to submit answers!"
-          python submission_reminder.py > $"output_logs.txt"
-          cat $"output_logs.txt"
+          python submission_reminder.py > "output_logs.txt"
+          cat "output_logs.txt"
       - name: Last Hour Reminder
         if: github.event.schedule == '57 6 27 11,1-2 *' || github.event.schedule == '57 5 27 3-10 *' || inputs.eventType == 'remind_answers_last'
         run: |
           . .venv/bin/activate
           echo "Last hour reminder to submit answers!"
-          python lastHourReminder.py > $"output_logs.txt"
-          cat $"output_logs.txt"
+          python lastHourReminder.py > "output_logs.txt"
+          cat "output_logs.txt"
       - name: Share Responses
         if: github.event.schedule == '59 7 28 11,1-2 *' || github.event.schedule == '59 6 28 3-10 *' || inputs.eventType == 'finish'
         run: |
           . .venv/bin/activate
           echo "Fredderloop complete, create and share newsletter!"
-          python share_responses.py > $"output_logs.txt"
-          cat $"output_logs.txt"
+          python share_responses.py > "output_logs.txt"
+          cat "output_logs.txt"
