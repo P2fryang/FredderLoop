@@ -15,18 +15,18 @@ def create_form(form_service) -> any:
 def add_default_form_body(form_service, form_id: str) -> None:
     """Apply default settings to form"""
     form_service.forms().batchUpdate(
-        form_id=form_id, body=default_form.get_default_form_body()
+        formId=form_id, body=default_form.get_default_form_body()
     ).execute()
 
 
 def get_form(form_service, form_id: str) -> any:
     """Get form object (includes id but not responses)"""
-    return form_service.forms().get(form_id=form_id).execute()
+    return form_service.forms().get(formId=form_id).execute()
 
 
 def get_form_responses(form_service, form_id: str) -> any:
     """Get form responses"""
-    return form_service.forms().responses().list(form_id=form_id).execute()
+    return form_service.forms().responses().list(formId=form_id).execute()
 
 
 def get_questions(form: dict) -> dict:
