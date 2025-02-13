@@ -33,8 +33,19 @@ def log(*args):
             tmp_arg = arg.split(" ")
             final_tmp_arg = []
             for a in tmp_arg:
-                if len(arg) == 33 or len(arg) == 44:
+                if len(a) == 33 or len(a) == 44:
                     final_tmp_arg.append("***")
                 else:
                     final_tmp_arg.append(a)
+            potential_new_arg = " ".join(final_tmp_arg)
+
+            # repeat with "/"
+            tmp_arg = potential_new_arg.split("/")
+            final_tmp_arg = []
+            for a in tmp_arg:
+                if len(a) == 33 or len(a) == 44:
+                    final_tmp_arg.append("***")
+                else:
+                    final_tmp_arg.append(a)
+            new_args.append("/".join(final_tmp_arg))
     print(" ".join(map(str, new_args)))
