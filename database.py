@@ -29,7 +29,7 @@ def pushToDatabase(docs_service, content):
     )
     request, curr_index = docUtil.add_paragraph(content, insert_index)
     err = docUtil.batch_update(docs_service, config.DOC_ID_DOCUMENT_ID, request)
-    if not err:
+    if err:
         masker.log(
             " ".join(
                 map(str, traceback.format_exception(type(err), err, err.__traceback__))
