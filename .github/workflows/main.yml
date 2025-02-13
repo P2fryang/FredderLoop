@@ -70,13 +70,13 @@ jobs:
           python -m venv .venv
           . .venv/bin/activate
           pip install -r requirements.txt
-      - name: Set up config.py
+      - name: Set up src/config.py
         run: |
           touch config.py
-          echo "SERVICE_ACCOUNT_CREDENTIALS_FILE='$SERVICE_ACCOUNT_CREDENTIALS_FILE'" >> config.py
-          echo "GOOGLE_DRIVE_FOLDER_ID='$GOOGLE_DRIVE_FOLDER_ID'" >> config.py
-          echo "NEWSLETTER_FOLDER_ID='$NEWSLETTER_FOLDER_ID'" >> config.py
-          echo "DOC_ID_DOCUMENT_ID='$DOC_ID_DOCUMENT_ID'" >> config.py
+          echo "SERVICE_ACCOUNT_CREDENTIALS_FILE='$SERVICE_ACCOUNT_CREDENTIALS_FILE'" >> src/config.py
+          echo "GOOGLE_DRIVE_FOLDER_ID='$GOOGLE_DRIVE_FOLDER_ID'" >> src/config.py
+          echo "NEWSLETTER_FOLDER_ID='$NEWSLETTER_FOLDER_ID'" >> src/config.py
+          echo "DOC_ID_DOCUMENT_ID='$DOC_ID_DOCUMENT_ID'" >> src/config.py
           echo "DISCORD_LETTERLOOP_WEBHOOK='$DISCORD_LETTERLOOP_WEBHOOK'" >> src/config.py
       - name: Create Service Account Credentials File
         run: |
