@@ -42,6 +42,7 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 10
     env:
+      PRINT_OUTPUT_FILE: "output_logs.txt"
       SERVICE_ACCOUNT_CREDENTIALS_FILE: ${{ secrets.SERVICE_ACCOUNT_CREDENTIALS_FILE }}
       GOOGLE_DRIVE_FOLDER_ID: ${{ secrets.GOOGLE_DRIVE_FOLDER_ID }}
       NEWSLETTER_FOLDER_ID: ${{ secrets.NEWSLETTER_FOLDER_ID }}
@@ -87,33 +88,39 @@ jobs:
           . .venv/bin/activate
           echo "Starting this month's Fredderloop by creating a form!"
           python create_form.py
+          cat $PRINT_OUTPUT_FILE
       - name: Reminder to Add Questions
         if: github.event.schedule == '59 7 20 11,1-2 *' || github.event.schedule == '59 6 20 3-10 *' || inputs.eventType == 'remind_questions'
         run: |
           . .venv/bin/activate
           echo "Last day reminder to add questions!"
           python add_questions_reminder.py
+          cat $PRINT_OUTPUT_FILE
       - name: Collecting Responses
         if: github.event.schedule == '59 7 21 11,1-2 *' || github.event.schedule == '59 6 21 3-10 *' || inputs.eventType == 'collect_answers'
         run: |
           . .venv/bin/activate
           echo "Starting to collect responses!"
           python collect_responses.py
+          cat $PRINT_OUTPUT_FILE
       - name: Reminder to Submit Answers
         if: github.event.schedule == '59 7 27 11,1-2 *' || github.event.schedule == '59 6 27 3-10 *' || inputs.eventType == 'remind_answers_day'
         run: |
           . .venv/bin/activate
           echo "Last day reminder to submit answers!"
           python submission_reminder.py
+          cat $PRINT_OUTPUT_FILE
       - name: Last Hour Reminder
         if: github.event.schedule == '57 6 27 11,1-2 *' || github.event.schedule == '57 5 27 3-10 *' || inputs.eventType == 'remind_answers_last'
         run: |
           . .venv/bin/activate
           echo "Last hour reminder to submit answers!"
           python lastHourReminder.py
+          cat $PRINT_OUTPUT_FILE
       - name: Share Responses
         if: github.event.schedule == '59 7 28 11,1-2 *' || github.event.schedule == '59 6 28 3-10 *' || inputs.eventType == 'finish'
         run: |
           . .venv/bin/activate
           echo "Fredderloop complete, create and share newsletter!"
           python share_responses.py
+          cat $PRINT_OUTPUT_FILE
