@@ -12,7 +12,8 @@ if __name__ == "__main__":
     # create the form
     masker.log("creating form")
     form = forms.create_form(form_service=form_service)
-    form_id = form["form_id"]
+    print(form)
+    form_id = form["formId"]
     # save form_id in database
     masker.log(f"form created: {form_id[0:3]}********")
     database.save_form_id(docs_service=docs_service, form_id=form_id)
@@ -28,7 +29,9 @@ if __name__ == "__main__":
     # Move the form to specific folderId
     masker.log("moving folder")
     drive.move_file_to_folder(
-        drive_service=drive_service, file_id=form_id, folder_id=config.GOOGLE_DRIVE_FOLDER_ID
+        drive_service=drive_service,
+        file_id=form_id,
+        folder_id=config.GOOGLE_DRIVE_FOLDER_ID,
     )
 
     discord.create_form_message()
