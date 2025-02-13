@@ -1,38 +1,37 @@
-import constants
-import driveUtil
-import formUtil
-import masker
-from createNewsletter import createNewsletter
+"""Create newsletter and share responses"""
+import sys
+
+from helpers.create_newsletter import create_newsletter
 from config import NEWSLETTER_FOLDER_ID
-from database import getFormId
-from discordBot import shareResponsesMessage, sendDiscordMessage
-from services import create_service
+from utils import database, discord, drive, forms, masker, services
 
 if __name__ == "__main__":
-    form_service = create_service(constants.FORMS_SERVICE)
-    drive_service = create_service(constants.DRIVE_SERVICE)
+    docs_service = services.create_docs_service()
+    drive_service = services.create_drive_service()
+    form_service = services.create_forms_service()
 
-    formId = getFormId()
-    if formId == "":
-        exit()
+    form_id = database.get_form_id(docs_service=docs_service)
+    if form_id == "":
+        masker.log("no form id found")
+        sys.exit()
 
-    form = formUtil.get_form(form_service=form_service, form_id=formId)
-    responses = formUtil.get_form_responses(form_service=form_service, form_id=formId)
+    form = forms.get_form(form_service=form_service, form_id=form_id)
+    responses = forms.get_form_responses(form_service=form_service, form_id=form_id)
 
     # if nobody submitted a response, do nothing
     if "responses" not in responses or len(responses["responses"]) == 0:
-        sendDiscordMessage("Nobody submitted a response this month :(")
-        exit()
+        discord.send_discord_message("Nobody submitted a response this month :(")
+        sys.exit()
 
     responses = responses["responses"]
 
     try:
-        doc_id, email_mapping = createNewsletter(form=form, responses=responses)
+        doc_id, email_mapping = create_newsletter(form=form, responses=responses)
         emails = []
         need_to_add = []
-        for email in email_mapping.keys():
+        for email, mapped_email in email_mapping.items():
             if "N/A-" in email and "@" not in email:
-                need_to_add.append(email_mapping[email])
+                need_to_add.append(mapped_email)
             else:
                 emails.append(email)
         masker.log(f"Number of emails found: {len(emails)}")
@@ -41,24 +40,24 @@ if __name__ == "__main__":
         )
 
         # Move from root to Newsletter folder
-        driveUtil.move_file_to_folder(
+        drive.move_file_to_folder(
             drive_service=drive_service, file_id=doc_id, folder_id=NEWSLETTER_FOLDER_ID
         )
 
-        driveUtil.share_document(
+        drive.share_document(
             drive_service=drive_service,
             file_id=doc_id,
             emails=emails,
-            permission=driveUtil.COMMENT_PERMISSION,
+            permission=drive.COMMENT_PERMISSION,
         )
-        shareResponsesMessage(doc_id, need_to_add)
+        discord.share_responses_message(doc_id, need_to_add)
     except Exception as e:
         masker.log(f"create newsletter failed:\n{e}")
 
         for response in responses:
             if "respondentEmail" in response:
                 drive_service.permissions().create(
-                    fileId=formId,
+                    fileId=form_id,
                     body={
                         "type": "user",
                         "emailAddress": response["respondentEmail"],
@@ -67,4 +66,4 @@ if __name__ == "__main__":
                 ).execute()
 
                 masker.log(f"sharing form with {response['respondentEmail'][0:3]}******")
-        shareResponsesMessage(formId, [])
+        discord.share_responses_message(form_id, [])

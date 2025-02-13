@@ -17,7 +17,7 @@ schedule python scripts to run periodically with crontab -e on ubuntu server
 
 ### Core Files
 
-createForm.py
+create_form.py
 
 - runs at the on the 1st of every month
 - creates a google form with a sharable link in a specified folder
@@ -25,13 +25,13 @@ createForm.py
 - set permissions so that everyone with the link can edit the google form
 - send link to discord channel via webhook
 
-collectResponses.py
+collect_responses.py
 
 - runs on the 21st of every month
 - changes permission so that form is not editable
 - send link to discord channel via webhook
 
-shareResponses.py
+share_responses.py
 
 - runs on the 28th of every month
 - create google doc with all responses and photos
@@ -39,12 +39,12 @@ shareResponses.py
 - comments can be added like with a normal google doc
 - send link to discord channel via webhook
 
-addQuestionsReminder.py
+add_questions_reminder.py
 
 - runs on the 20th of every month
 - send discord message to remind that it's last day to submit questions
 
-submissionReminder.py
+submission_reminder.py
 
 - runs on the 27th of every month
 - send discord message to remind that it's last day to submit responses
@@ -57,7 +57,7 @@ lastHourReminder.py
 (optional)
 reminders.py
 
-- runs a day before shareResponses run
+- runs a day before share_responses run
 - boot up discord bot to remind people who haven’t submitted
 - this means bot will have to maintain a set of people who are in letterloop and a set of people who have submitted the form
 - this could mean maybe give bot access to user and roles in the server
@@ -68,7 +68,7 @@ reminders.py
 
 database.py and database
 
-- stores the formId of the created google form for ease of access
+- stores the form_id of the created google form for ease of access
 
 googleCred.py
 
@@ -82,15 +82,15 @@ discordBot.py
 
 - has a function to send a single message to discord server
 
-docUtil.py
+utils.docUtil.py
 
 - contains the functions to interact with the Docs and create the newsletter
 
-driveUtil.py
+utils.driveUtil.py
 
 - contains the functions to interact with the Drive instance like file permissions
 
-createNewsletter.py
+create_newsletter.py
 
 - contains the function to process the form and responses to create the newsletter in a Doc
 

@@ -1,10 +1,13 @@
+"""Module containing basic print wrapper to mask sensitive information"""
+
 import os
 
-# Basic print wrapper to mask potential emails and Google Drive folder/file id
+
 # This should be only place where "print" is called to avoid leaking sensitive
 # information into Github Actions output
 def log(*args):
-    if "ALLOW_SENSITIVE_OUTPUT" in os.environ.keys():
+    """Base print wrapper to mask potential emails and Google Drive folder/file id"""
+    if "ALLOW_SENSITIVE_OUTPUT" in os.environ:
         # backdoor to allow default printing
         print(" ".join(map(str, args)))
     new_args = []
@@ -25,7 +28,7 @@ def log(*args):
             # mask Google Drive folder/file IDs
             # basing numbers off random stackoverflow
             # https://stackoverflow.com/questions/38780572/is-there-any-specific-for-google-drive-file-id#comment133192830_38780572
-            
+
             # check by chunk
             tmp_arg = arg.split(" ")
             final_tmp_arg = []
