@@ -9,8 +9,9 @@ from services import create_service
 
 
 if __name__ == "__main__":
-    form_service = create_service(constants.FORMS_SERVICE)
+    docs_service = create_service(constants.DOCS_SERVICE)
     drive_service = create_service(constants.DRIVE_SERVICE)
+    form_service = create_service(constants.FORMS_SERVICE)
 
     # create the form
     masker.log("creating form")
@@ -18,7 +19,7 @@ if __name__ == "__main__":
     formId = form["formId"]
     # save formId in database
     masker.log(f"form created: {formId[0:3]}********")
-    saveFormId(form["formId"])
+    saveFormId(docs_service=docs_service, formId=formId)
 
     # add default questions
     masker.log("add default questions")
