@@ -3,4 +3,5 @@
 from src.utils import discord
 
 if __name__ == "__main__":
+    print("hi?")
     discord.add_questions_reminder_message()
