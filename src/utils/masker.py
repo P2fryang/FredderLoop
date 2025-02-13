@@ -37,5 +37,4 @@ def log(*args):
                     final_tmp_arg.append("***")
                 else:
                     final_tmp_arg.append(a)
-    with open("output_logs.txt", "w+", encoding="utf-8") as f:
-        f.write(" ".join(map(str, new_args)) + "\n")
+    print(" ".join(map(str, new_args)))
