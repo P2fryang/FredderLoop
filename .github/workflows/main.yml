@@ -110,7 +110,7 @@ jobs:
         run: |
           . .venv/bin/activate
           echo "Last hour reminder to submit answers!"
-          python lastHourReminder.py
+          python last_hour_reminder.py
       - name: Share Responses
         if: github.event.schedule == '59 7 28 11,1-2 *' || github.event.schedule == '59 6 28 3-10 *' || inputs.eventType == 'finish'
         run: |

@@ -10,5 +10,5 @@
 0 0 20 * * /home/pi/FredderLoop/run add_questions_reminder
 0 0 21 * * /home/pi/FredderLoop/run collect_responses
 0 0 27 * * /home/pi/FredderLoop/run submission_reminder
-0 23 27 * * /home/pi/FredderLoop/run lastHourReminder
+0 23 27 * * /home/pi/FredderLoop/run last_hour_reminder
 0 0 28 * * /home/pi/FredderLoop/run share_responses

@@ -49,7 +49,7 @@ submission_reminder.py
 - runs on the 27th of every month
 - send discord message to remind that it's last day to submit responses
 
-lastHourReminder.py
+last_hour_reminder.py
 
 - runs at 22:59 on the 27th of every month
 - send discord message for last hour reminders to submit responses
