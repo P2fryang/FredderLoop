@@ -4,8 +4,8 @@ import os
 
 import requests
 
-import config
-from utils import database, services, masker
+from src import config
+from src.utils import database, services, masker
 
 
 def send_discord_message(message: str) -> None:

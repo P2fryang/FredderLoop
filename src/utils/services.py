@@ -2,7 +2,7 @@
 
 from apiclient import discovery
 
-from utils import google_cred
+from src.utils import google_cred
 
 DRIVE_SERVICE = "drive"
 DOCS_SERVICE = "docs"

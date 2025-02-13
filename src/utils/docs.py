@@ -5,7 +5,7 @@ import traceback
 
 import emoji
 
-from utils import masker
+from src.utils import masker
 
 # constants
 TITLE = "TITLE"

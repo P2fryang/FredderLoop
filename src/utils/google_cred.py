@@ -2,7 +2,7 @@
 
 import google.oauth2 as oauth
 
-import config
+from src import config
 
 SCOPES = ["https://www.googleapis.com/auth/drive.file"]
 

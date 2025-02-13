@@ -1,9 +1,10 @@
 """Create newsletter and share responses"""
+
 import sys
 
-from helpers.create_newsletter import create_newsletter
-from config import NEWSLETTER_FOLDER_ID
-from utils import database, discord, drive, forms, masker, services
+from src import config
+from src.helpers import create_newsletter
+from src.utils import database, discord, drive, forms, masker, services
 
 if __name__ == "__main__":
     docs_service = services.create_docs_service()
@@ -26,7 +27,7 @@ if __name__ == "__main__":
     responses = responses["responses"]
 
     try:
-        doc_id, email_mapping = create_newsletter(form=form, responses=responses)
+        doc_id, email_mapping = create_newsletter.create_newsletter(form=form, responses=responses)
         emails = []
         need_to_add = []
         for email, mapped_email in email_mapping.items():
@@ -41,7 +42,9 @@ if __name__ == "__main__":
 
         # Move from root to Newsletter folder
         drive.move_file_to_folder(
-            drive_service=drive_service, file_id=doc_id, folder_id=NEWSLETTER_FOLDER_ID
+            drive_service=drive_service,
+            file_id=doc_id,
+            folder_id=config.NEWSLETTER_FOLDER_ID,
         )
 
         drive.share_document(
@@ -65,5 +68,7 @@ if __name__ == "__main__":
                     },
                 ).execute()
 
-                masker.log(f"sharing form with {response['respondentEmail'][0:3]}******")
+                masker.log(
+                    f"sharing form with {response['respondentEmail'][0:3]}******"
+                )
         discord.share_responses_message(form_id, [])

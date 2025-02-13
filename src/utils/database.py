@@ -3,8 +3,8 @@
 # import os
 import traceback
 
-import config
-from utils import docs, masker
+from src import config
+from src.utils import docs, masker
 
 
 def save_form_id(docs_service, form_id):

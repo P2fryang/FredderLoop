@@ -1,7 +1,7 @@
 """Start Fredderloop by creating form"""
 
-import config
-from utils import database, discord, drive, forms, masker, services
+from src import config
+from src.utils import database, discord, drive, forms, masker, services
 
 
 if __name__ == "__main__":

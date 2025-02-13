@@ -2,7 +2,7 @@
 
 import sys
 
-from utils import database, discord, forms, services
+from src.utils import database, discord, forms, services
 
 if __name__ == "__main__":
     docs_service = services.create_docs_service()

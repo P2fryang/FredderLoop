@@ -2,7 +2,7 @@
 
 import datetime
 
-from utils import database, docs, forms, services
+from src.utils import database, docs, forms, services
 
 
 def create_newsletter(form: dict, responses: dict) -> tuple[str, dict]:

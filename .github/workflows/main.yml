@@ -77,7 +77,7 @@ jobs:
           echo "GOOGLE_DRIVE_FOLDER_ID='$GOOGLE_DRIVE_FOLDER_ID'" >> config.py
           echo "NEWSLETTER_FOLDER_ID='$NEWSLETTER_FOLDER_ID'" >> config.py
           echo "DOC_ID_DOCUMENT_ID='$DOC_ID_DOCUMENT_ID'" >> config.py
-          echo "DISCORD_LETTERLOOP_WEBHOOK='$DISCORD_LETTERLOOP_WEBHOOK'" >> config.py
+          echo "DISCORD_LETTERLOOP_WEBHOOK='$DISCORD_LETTERLOOP_WEBHOOK'" >> src/config.py
       - name: Create Service Account Credentials File
         run: |
           echo $SERVICE_ACCOUNT_CREDENTIALS_BASE64 | base64 --decode > $SERVICE_ACCOUNT_CREDENTIALS_FILE
