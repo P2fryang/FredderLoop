@@ -35,7 +35,7 @@ def get_form_id(docs_service):
             file_id=config.DOC_ID_DOCUMENT_ID,
             search_string="form_id",
         )
-        .split(":")
+        .split(":")[-1]
         .strip()
     )
     if "" == form_id:
