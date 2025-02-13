@@ -48,6 +48,7 @@ jobs:
       DISCORD_LETTERLOOP_WEBHOOK: ${{ secrets.DISCORD_LETTERLOOP_WEBHOOK }}
       DOC_ID_DOCUMENT_ID: ${{ secrets.DOC_ID_DOCUMENT_ID }}
       SERVICE_ACCOUNT_CREDENTIALS_BASE64: ${{ secrets.SERVICE_ACCOUNT_CREDENTIALS_BASE64 }}
+      PYTHONUNBUFFERED: "1"
     steps:
       - name: Mask secrets
         run: |
