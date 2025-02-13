@@ -12,7 +12,7 @@ if __name__ == "__main__":
     # create the form
     masker.log("creating form")
     form = forms.create_form(form_service=form_service)
-    print(form)
+    # Key must be "formID"
     form_id = form["formId"]
     # save form_id in database
     masker.log(f"form created: {form_id[0:3]}********")
