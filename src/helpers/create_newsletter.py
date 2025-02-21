@@ -15,9 +15,12 @@ def create_newsletter(form: dict, responses: dict) -> tuple[str, dict]:
     )
     doc_id = doc["documentId"]
     # save newsletter ID
-    database.push_to_database(docs_service=docs_service, content=f"newsletterID:{doc_id}")
+    database.push_to_database(
+        docs_service=docs_service, content=f"newsletterID:{doc_id}"
+    )
     current_index = 1
-    processed, email_mapping = forms.process_responses(form, responses)
+    processed, email_mapping, no_photos = forms.process_responses(form, responses)
+    photo_ans = []
     requests = []
 
     # add title
@@ -29,15 +32,17 @@ def create_newsletter(form: dict, responses: dict) -> tuple[str, dict]:
     tmp, current_index = docs.add_horizontal_rule(current_index)
     requests.extend(tmp)
 
-    photo_ans = processed.pop()
+    if not no_photos:
+        photo_ans = processed.pop()
     # add each question besides photo (pop photo into diff var)
     for response in processed:
         tmp, current_index = docs.add_response(response, current_index)
         requests.extend(tmp)
 
     # add photos
-    tmp, current_index = docs.add_photos(photo_ans, current_index)
-    requests.extend(tmp)
+    if photo_ans:
+        tmp, current_index = docs.add_photos(photo_ans, current_index)
+        requests.extend(tmp)
 
     # update font
     tmp, _ = docs.update_font(curr_ind=current_index)

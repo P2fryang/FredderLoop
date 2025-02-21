@@ -49,6 +49,7 @@ def process_responses(form: dict, responses: dict) -> tuple[dict, dict]:
     questions = get_questions(form)
     processed = {}
     email_mapping = {}
+    no_photos = False
 
     counter = 0
     # get only questions and responses
@@ -105,4 +106,8 @@ def process_responses(form: dict, responses: dict) -> tuple[dict, dict]:
                 break
             ind += 1
 
-    return final_processed, email_mapping
+    if "photo wall" not in list(final_processed[-1].keys())[0].lower():
+        # if no one added photo wall response
+        no_photos = True
+
+    return final_processed, email_mapping, no_photos

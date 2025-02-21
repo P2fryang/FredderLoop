@@ -1,6 +1,7 @@
 """Module containing docs helper functions"""
 
 # https://googleapis.github.io/google-api-python-client/docs/dyn/docs_v1.documents.html
+import os
 import traceback
 
 import emoji
@@ -157,11 +158,12 @@ def _add_table_answers(
                     text=ans,
                     curr_ind=curr_ind,
                     heading_type=NORMAL_TEXT,
-                    newline=False,
+                    newline=True,
                 )
                 requests.extend(tmp)
                 # add 1 ind per emoji in answer due to how Google Docs handles emoji's
                 curr_ind += emoji.emoji_count(ans)
+        curr_ind += 1
 
         # delete random newline from table insert
         requests.append(
@@ -672,9 +674,12 @@ def update_font(curr_ind: int) -> tuple[list, int]:
 def batch_update(docs_service, file_id: str, requests: list) -> dict:
     """Execute specified batch of requests"""
     try:
-        docs_service.documents().batchUpdate(
+        updated_doc = docs_service.documents().batchUpdate(
             documentId=file_id, body={"requests": requests}
         ).execute()
-        return None
+        print(f"Successfully updated {updated_doc["documentId"][0:3]}*******")
     except Exception as e:
+        print("failed to update doc, use env var to see error")
+        if "ALLOW_SENSITIVE_OUTPUT" in os.environ:
+            raise e
         return e

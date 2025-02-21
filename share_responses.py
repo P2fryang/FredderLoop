@@ -18,7 +18,6 @@ if __name__ == "__main__":
 
     form = forms.get_form(form_service=form_service, form_id=form_id)
     responses = forms.get_form_responses(form_service=form_service, form_id=form_id)
-
     # if nobody submitted a response, do nothing
     if "responses" not in responses or len(responses["responses"]) == 0:
         discord.send_discord_message("Nobody submitted a response this month :(")
