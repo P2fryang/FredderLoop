@@ -677,7 +677,7 @@ def batch_update(docs_service, file_id: str, requests: list) -> dict:
         updated_doc = docs_service.documents().batchUpdate(
             documentId=file_id, body={"requests": requests}
         ).execute()
-        print(f"Successfully updated {updated_doc["documentId"][0:3]}*******")
+        print(f"Successfully updated {updated_doc['documentId'][0:3]}*******")
     except Exception as e:
         print("failed to update doc, use env var to see error")
         if "ALLOW_SENSITIVE_OUTPUT" in os.environ:
