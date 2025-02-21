@@ -67,6 +67,8 @@ def submission_reminder_message() -> None:
 
 def last_hour_reminder_message(names: list) -> None:
     """Send last hour reminder to submit answers"""
+    if "FREDDERLOOP_PROD" not in os.environ:
+        names = [f"{name[0]}***" for name in names]
     docs_service = services.create_docs_service()
     form_id = database.get_form_id(docs_service=docs_service)
     message = (
