@@ -153,16 +153,26 @@ def _add_table_answers(
             curr_ind += 1  # add index per row
             for ans in row:
                 curr_ind += 2
-                # weird google math? 1 for cell and one for newline maybe?
-                tmp, curr_ind = add_paragraph(
-                    text=ans,
-                    curr_ind=curr_ind,
-                    heading_type=NORMAL_TEXT,
-                    newline=True,
-                )
-                requests.extend(tmp)
-                # add 1 ind per emoji in answer due to how Google Docs handles emoji's
-                curr_ind += emoji.emoji_count(ans)
+                if emoji.emoji_count(ans) == 0:
+                    # weird google math? 1 for cell and one for newline maybe?
+                    tmp, curr_ind = add_paragraph(
+                        text=ans,
+                        curr_ind=curr_ind,
+                        heading_type=NORMAL_TEXT,
+                        newline=True,
+                    )
+                    requests.extend(tmp)
+                else:
+                    # weird google math? 1 for cell and one for newline maybe?
+                    tmp, curr_ind = add_paragraph(
+                        text=ans,
+                        curr_ind=curr_ind,
+                        heading_type=NORMAL_TEXT,
+                        newline=True,
+                    )
+                    requests.extend(tmp)
+                    # add 1 ind per emoji in answer due to how Google Docs handles emoji's
+                    curr_ind += emoji.emoji_count(ans) - 1
         curr_ind += 1
 
         # delete random newline from table insert
