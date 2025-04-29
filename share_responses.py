@@ -52,7 +52,7 @@ if __name__ == "__main__":
             emails=emails,
             permission=drive.COMMENT_PERMISSION,
         )
-        discord.share_responses_message(doc_id, need_to_add)
+        discord.share_responses_message(doc_id, need_to_add, False)
     except Exception as e:
         masker.log(f"create newsletter failed:\n{e}")
 
@@ -70,4 +70,5 @@ if __name__ == "__main__":
                 masker.log(
                     f"sharing form with {response['respondentEmail'][0:3]}******"
                 )
-        discord.share_responses_message(form_id, [])
+        discord.share_responses_message(form_id, [], True)
+        discord.share_responses_failed_message(doc_id,e)
