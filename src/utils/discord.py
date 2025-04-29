@@ -59,7 +59,8 @@ def submission_reminder_message() -> None:
     docs_service = services.create_docs_service()
     form_id = database.get_form_id(docs_service=docs_service)
     message = (
-        "Last day to submit your answers, due end of day (there is NO auto-submit)! "
+        "@everyone \n"
+        + "Last day to submit your answers, due end of day (there is NO auto-submit)! "
         + f"https://docs.google.com/forms/d/{form_id}/viewform"
     )
     send_discord_message(message)
@@ -72,23 +73,40 @@ def last_hour_reminder_message(names: list) -> None:
     docs_service = services.create_docs_service()
     form_id = database.get_form_id(docs_service=docs_service)
     message = (
-        "Only ONE MORE HOUR to submit your answers (there is NO auto-submit)! "
+        f"{config.DISCORD_LETTERLOOP_ROLE} \n"
+        + "Only ONE MORE HOUR to submit your answers (there is NO auto-submit)! "
         + f"https://docs.google.com/forms/d/{form_id}/viewform"
         + f"\n\nCurrent responses: {', '.join(names)}"
     )
     send_discord_message(message)
 
 
-def share_responses_message(doc_id: str, need_to_add: list) -> None:
+def share_responses_message(doc_id: str, need_to_add: list, err) -> None:
     """Send message with link to newsletter"""
     need_to_add_message = (
         f"\nNeed to share newsletter with these users: {', '.join(need_to_add)}"
     )
-    message = (
-        "FredderLoop issue over!"
-        + "\nNew FredderLoop starts on the 1st!"
-        + "\n"
-        + f"\nView newsletter here: https://docs.google.com/document/d/{doc_id}/edit"
-        + need_to_add_message
-    )
+    if err:
+        message = (
+            "FredderLoop issue over!"
+            + "\nNew FredderLoop starts on the 1st!"
+            + "\n"
+            + "But unforunately something failed...\n"
+            + f"\nView newsletter here: https://docs.google.com/document/d/{doc_id}/edit"
+            + need_to_add_message
+        )
+    else:
+        message = (
+            "FredderLoop issue over!"
+            + "\nNew FredderLoop starts on the 1st!"
+            + "\n"
+            + f"\nView newsletter here: https://docs.google.com/document/d/{doc_id}/edit"
+            + need_to_add_message
+        )
     send_discord_message(message)
+
+def share_responses_failed_message(err_str: str) -> None:
+    """Send error message to dev channel"""
+    requests.post(
+        config.DISCORD_LETTERLOOP_WEBHOOK_DEV, timeout=30, json={"content": str(err_str)}
+    )

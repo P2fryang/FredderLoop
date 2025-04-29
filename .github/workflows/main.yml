@@ -46,6 +46,8 @@ jobs:
       GOOGLE_DRIVE_FOLDER_ID: ${{ secrets.GOOGLE_DRIVE_FOLDER_ID }}
       NEWSLETTER_FOLDER_ID: ${{ secrets.NEWSLETTER_FOLDER_ID }}
       DISCORD_LETTERLOOP_WEBHOOK: ${{ secrets.DISCORD_LETTERLOOP_WEBHOOK }}
+      DISCORD_LETTERLOOP_WEBHOOK_DEV: ${{ secrets.DISCORD_LETTERLOOP_WEBHOOK_DEV }}
+      DISCORD_LETTERLOOP_ROLE: ${{ secrets.DISCORD_LETTERLOOP_ROLE }}
       DOC_ID_DOCUMENT_ID: ${{ secrets.DOC_ID_DOCUMENT_ID }}
       SERVICE_ACCOUNT_CREDENTIALS_BASE64: ${{ secrets.SERVICE_ACCOUNT_CREDENTIALS_BASE64 }}
     steps:
@@ -56,6 +58,8 @@ jobs:
           echo "::add-mask::$NEWSLETTER_FOLDER_ID"
           echo "::add-mask::$DOC_ID_DOCUMENT_ID"
           echo "::add-mask::$DISCORD_LETTERLOOP_WEBHOOK"
+          echo "::add-mask::$DISCORD_LETTERLOOP_WEBHOOK_DEV"
+          echo "::add-mask::$DISCORD_LETTERLOOP_ROLE"
           echo "::add-mask::$SERVICE_ACCOUNT_CREDENTIALS_BASE64"
       - name: Is prod run
         if: github.event_name == 'schedule' || inputs.isProduction
@@ -78,6 +82,8 @@ jobs:
           echo "NEWSLETTER_FOLDER_ID='$NEWSLETTER_FOLDER_ID'" >> src/config.py
           echo "DOC_ID_DOCUMENT_ID='$DOC_ID_DOCUMENT_ID'" >> src/config.py
           echo "DISCORD_LETTERLOOP_WEBHOOK='$DISCORD_LETTERLOOP_WEBHOOK'" >> src/config.py
+          echo "DISCORD_LETTERLOOP_WEBHOOK_DEV='$DISCORD_LETTERLOOP_WEBHOOK_DEV'" >> src/config.py
+          echo "DISCORD_LETTERLOOP_ROLE='$DISCORD_LETTERLOOP_ROLE'" >> src/config.py
       - name: Create Service Account Credentials File
         run: |
           echo $SERVICE_ACCOUNT_CREDENTIALS_BASE64 | base64 --decode > $SERVICE_ACCOUNT_CREDENTIALS_FILE
