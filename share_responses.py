@@ -70,5 +70,6 @@ if __name__ == "__main__":
                 masker.log(
                     f"sharing form with {response['respondentEmail'][0:3]}******"
                 )
+
         discord.share_responses_message(form_id, [], True)
-        discord.share_responses_failed_message(doc_id,e)
+        discord.share_responses_failed_message(e)

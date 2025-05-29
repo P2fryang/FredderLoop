@@ -48,6 +48,12 @@ def create_newsletter(form: dict, responses: dict) -> tuple[str, dict]:
     tmp, _ = docs.update_font(curr_ind=current_index)
     requests.extend(tmp)
 
+    # with open("failed.py", "w+") as f:
+    #     nreqs = {}
+    #     for i, req in enumerate(requests):
+    #         nreqs[i] = req
+    #     f.write(str(nreqs))
+
     # push changes
     docs.batch_update(docs_service=docs_service, file_id=doc_id, requests=requests)
 

@@ -153,26 +153,19 @@ def _add_table_answers(
             curr_ind += 1  # add index per row
             for ans in row:
                 curr_ind += 2
-                if emoji.emoji_count(ans) == 0:
-                    # weird google math? 1 for cell and one for newline maybe?
-                    tmp, curr_ind = add_paragraph(
-                        text=ans,
-                        curr_ind=curr_ind,
-                        heading_type=NORMAL_TEXT,
-                        newline=True,
-                    )
-                    requests.extend(tmp)
-                else:
-                    # weird google math? 1 for cell and one for newline maybe?
-                    tmp, curr_ind = add_paragraph(
-                        text=ans,
-                        curr_ind=curr_ind,
-                        heading_type=NORMAL_TEXT,
-                        newline=True,
-                    )
-                    requests.extend(tmp)
+                # weird google math? 1 for cell and one for newline maybe?
+                tmp, curr_ind = add_paragraph(
+                    text=ans,
+                    curr_ind=curr_ind,
+                    heading_type=NORMAL_TEXT,
+                    newline=True,
+                )
+                requests.extend(tmp)
+                if emoji.emoji_count(ans) > 0:
                     # add 1 ind per emoji in answer due to how Google Docs handles emoji's
-                    curr_ind += emoji.emoji_count(ans) - 1
+                    zwj = '\u200d'
+                    curr_ind -= ans.count(zwj)
+                    curr_ind += 1
         curr_ind += 1
 
         # delete random newline from table insert
@@ -545,7 +538,7 @@ def add_photos(response: dict, curr_ind: int) -> tuple[list, int]:
                             # use below for auto convert image type
                             "uri": "https://drive.google.com/thumbnail?id="
                             + photo_id
-                            + "&sz=w1000",
+                            + "&sz=w250",
                         },
                     },
                 )

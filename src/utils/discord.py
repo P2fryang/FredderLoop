@@ -107,6 +107,10 @@ def share_responses_message(doc_id: str, need_to_add: list, err) -> None:
 
 def share_responses_failed_message(err_str: str) -> None:
     """Send error message to dev channel"""
-    requests.post(
-        config.DISCORD_LETTERLOOP_WEBHOOK_DEV, timeout=30, json={"content": str(err_str)}
-    )
+    if "FREDDERLOOP_PROD" in os.environ:
+        requests.post(
+            config.DISCORD_LETTERLOOP_WEBHOOK_DEV, timeout=30, json={"content": str(err_str)}
+        )
+    else:
+        masker.log(f"Discord message testing:\n{err_str}")
+    
