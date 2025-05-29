@@ -160,12 +160,18 @@ def _add_table_answers(
                     heading_type=NORMAL_TEXT,
                     newline=True,
                 )
+
                 requests.extend(tmp)
                 if emoji.emoji_count(ans) > 0:
-                    # add 1 ind per emoji in answer due to how Google Docs handles emoji's
                     zwj = '\u200d'
-                    curr_ind -= ans.count(zwj)
-                    curr_ind += 1
+                    # len counts normal emoji as 1 each
+                    # and combined emoji as 4 total
+                    # emoji_count counts all emoji (combined as well)
+                    # as 1 each
+                    # Google counts each emoji as 2 and combined
+                    # emojis as 6 (2 per unicode block)
+                    curr_ind += emoji.emoji_count(ans)
+                    curr_ind += ans.count(zwj)
         curr_ind += 1
 
         # delete random newline from table insert

@@ -2,7 +2,7 @@
 
 import datetime
 
-from src.utils import database, docs, forms, services
+from src.utils import database, docs, forms, masker, services
 
 
 def create_newsletter(form: dict, responses: dict) -> tuple[str, dict]:
@@ -48,10 +48,14 @@ def create_newsletter(form: dict, responses: dict) -> tuple[str, dict]:
     tmp, _ = docs.update_font(curr_ind=current_index)
     requests.extend(tmp)
 
+    # use for debugging only
     # with open("failed.py", "w+") as f:
+    #     masker.log("Writing requests to failed.py")
     #     nreqs = {}
-    #     for i, req in enumerate(requests):
+    #     i = 0
+    #     for req in requests:
     #         nreqs[i] = req
+    #         i += 1
     #     f.write(str(nreqs))
 
     # push changes

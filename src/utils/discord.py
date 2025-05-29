@@ -92,7 +92,7 @@ def share_responses_message(doc_id: str, need_to_add: list, err) -> None:
             + "\nNew FredderLoop starts on the 1st!"
             + "\n"
             + "But unforunately something failed...\n"
-            + f"\nView newsletter here: https://docs.google.com/document/d/{doc_id}/edit"
+            + f"\nView newsletter here through the form: https://docs.google.com/document/d/{doc_id}/edit"
             + need_to_add_message
         )
     else:

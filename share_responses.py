@@ -1,6 +1,7 @@
 """Create newsletter and share responses"""
 
 import sys
+# import traceback
 
 from src import config
 from src.helpers import create_newsletter
@@ -54,6 +55,7 @@ if __name__ == "__main__":
         )
         discord.share_responses_message(doc_id, need_to_add, False)
     except Exception as e:
+        # traceback.print_exc()
         masker.log(f"create newsletter failed:\n{e}")
 
         for response in responses:
