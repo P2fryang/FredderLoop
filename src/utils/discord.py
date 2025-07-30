@@ -66,10 +66,45 @@ def submission_reminder_message() -> None:
     send_discord_message(message)
 
 
-def last_hour_reminder_message(names: list) -> None:
+def day_of_reminder_message(names: list, list_of_shame: list) -> None:
+    """Send day-of reminder to submit answers"""
+    if "FREDDERLOOP_PROD" not in os.environ:
+        names = [f"{name[0]}***" for name in names]
+        list_of_shame = [f"{id[0:3]}***" for id in list_of_shame]
+    docs_service = services.create_docs_service()
+    form_id = database.get_form_id(docs_service=docs_service)
+    message = (
+        f"{config.DISCORD_LETTERLOOP_ROLE} \n"
+        + "Time to submit your answers (there is NO auto-submit)! "
+        + f"https://docs.google.com/forms/d/{form_id}/viewform"
+        + f"\n\nCurrent responses: {', '.join(names)}"
+        + f"\n\nMissing: {', '.join(list_of_shame)}"
+    )
+    send_discord_message(message)
+
+
+def evening_reminder_message(names: list, list_of_shame: list) -> None:
+    """Send evening reminder to submit answers"""
+    if "FREDDERLOOP_PROD" not in os.environ:
+        names = [f"{name[0]}***" for name in names]
+        list_of_shame = [f"{id[0:3]}***" for id in list_of_shame]
+    docs_service = services.create_docs_service()
+    form_id = database.get_form_id(docs_service=docs_service)
+    message = (
+        f"{config.DISCORD_LETTERLOOP_ROLE} \n"
+        + "Better submit your answer before your sleep... (there is NO auto-submit)! "
+        + f"https://docs.google.com/forms/d/{form_id}/viewform"
+        + f"\n\nCurrent responses: {', '.join(names)}"
+        + f"\n\nMissing: {', '.join(list_of_shame)}"
+    )
+    send_discord_message(message)
+
+
+def last_hour_reminder_message(names: list, list_of_shame: list) -> None:
     """Send last hour reminder to submit answers"""
     if "FREDDERLOOP_PROD" not in os.environ:
         names = [f"{name[0]}***" for name in names]
+        list_of_shame = [f"{id[0:3]}***" for id in list_of_shame]
     docs_service = services.create_docs_service()
     form_id = database.get_form_id(docs_service=docs_service)
     message = (
@@ -77,6 +112,7 @@ def last_hour_reminder_message(names: list) -> None:
         + "Only ONE MORE HOUR to submit your answers (there is NO auto-submit)! "
         + f"https://docs.google.com/forms/d/{form_id}/viewform"
         + f"\n\nCurrent responses: {', '.join(names)}"
+        + f"\n\nMissing: {', '.join(list_of_shame)}"
     )
     send_discord_message(message)
 

@@ -27,13 +27,17 @@ on:
     - cron: '59 7 20 11,1-2 *'
     - cron: '59 7 21 11,1-2 *'
     - cron: '59 7 27 11,1-2 *'
-    - cron: '56 6 28 11,1-2 *'
+    - cron: '57 17 27 11,1-2 *'
+    - cron: '57 0 28 11,1-2 *'
+    - cron: '57 6 28 11,1-2 *'
     - cron: '59 7 28 11,1-2 *'
     # daylight savings on (UTC-7)
     - cron: '59 6 1 4-11 *'
     - cron: '59 6 20 3-10 *'
     - cron: '59 6 21 3-10 *'
     - cron: '59 6 27 3-10 *'
+    - cron: '57 16 27 3-10 *'
+    - cron: '57 23 27 3-10 *'
     - cron: '57 5 28 3-10 *'
     - cron: '59 6 28 3-10 *'
 
@@ -111,8 +115,20 @@ jobs:
           . .venv/bin/activate
           echo "Last day reminder to submit answers!"
           python submission_reminder.py
+      - name: Day of Reminder
+        if: github.event.schedule == '57 16 27 3-10 *' || github.event.schedule == '57 17 27 11,1-2 *' || inputs.eventType == 'remind_answers_last'
+        run: |
+          . .venv/bin/activate
+          echo "Last hour reminder to submit answers!"
+          python day_of_reminder.py
+      - name: Evening Reminder
+        if: github.event.schedule == '57 23 27 3-10 *' || github.event.schedule == '57 0 28 11,1-2 *' || inputs.eventType == 'remind_answers_last'
+        run: |
+          . .venv/bin/activate
+          echo "Last hour reminder to submit answers!"
+          python evening_reminder.py
       - name: Last Hour Reminder
-        if: github.event.schedule == '56 6 28 11,1-2 *' || github.event.schedule == '57 5 28 3-10 *' || inputs.eventType == 'remind_answers_last'
+        if: github.event.schedule == '57 6 28 11,1-2 *' || github.event.schedule == '57 5 28 3-10 *' || inputs.eventType == 'remind_answers_last'
         run: |
           . .venv/bin/activate
           echo "Last hour reminder to submit answers!"

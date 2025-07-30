@@ -170,6 +170,19 @@ def _add_table_answers(
                     # as 1 each
                     # Google counts each emoji as 2 and combined
                     # emojis as 6 (2 per unicode block)
+
+                    # But, sometimes the emoji's count as 2 D:
+                    # check out emoji.EMOJI_DATA["<emoji>"]
+                    # consider emoji replace to deal with
+                    # differing/incompatible emoji versions
+
+                    # list of distinct emojis
+                    emojis = emoji.distinct_emoji_list(ans)
+                    for e in emojis:
+                        if len(e) == 2 and zwj not in e:
+                            curr_ind -= 1
+                        elif len(e) > 2:
+                            curr_ind += len(e) - 1
                     curr_ind += emoji.emoji_count(ans)
                     curr_ind += ans.count(zwj)
         curr_ind += 1
